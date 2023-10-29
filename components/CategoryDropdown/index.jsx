@@ -1,16 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { categorizeProduct } from "@/products/store";
+import { categorizeProduct } from "../../products/store";
 
 const CategoryDropdown = () => {
   const dispatch = useDispatch();
-
   return (
     <>
       <select
         className="bg-white rounded-10 border text-black"
         name="category"
-        id="cate"
+        id="category"
+        role="Category"
         onChange={(event) => {
           dispatch(categorizeProduct(event.target.value));
         }}

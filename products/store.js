@@ -23,13 +23,22 @@ export const productsReducer = createSlice({
     filteredProducts: [],
     isLoading: true,
     error: null,
-    sort: "asc",
+    order: "asc",
+    category: "",
+    limit: -1,
   },
   reducers: {
     sortProducts: (state, action) => {
       const order = action.payload;
-      state.sort = order;
+      state.order = order;
       state.products.sort((a, b) => {
+        if (order === "asc") {
+          return a.price - b.price;
+        } else {
+          return b.price - a.price;
+        }
+      });
+      state.filteredProducts.sort((a, b) => {
         if (order === "asc") {
           return a.price - b.price;
         } else {
@@ -39,12 +48,71 @@ export const productsReducer = createSlice({
     },
     categorizeProduct: (state, action) => {
       const category = action.payload;
-      if (category === "all") state.filteredProducts = [];
-      else {
+      state.category = category;
+      if (category === "all") {
+        state.filteredProducts = [];
+        state.category = "";
+      } else {
         state.filteredProducts = state.products.filter(
           (item) => item.category === category
         );
       }
+
+      if (state.limit !== -1) {
+        state.filteredProducts = (
+          state.filteredProducts.length > 0
+            ? state.filteredProducts
+            : state.products
+        ).filter((item, index) => index < state.limit);
+      }
+
+      state.products.sort((a, b) => {
+        if (state.order === "asc") {
+          return a.price - b.price;
+        } else {
+          return b.price - a.price;
+        }
+      });
+      state.filteredProducts.sort((a, b) => {
+        if (state.order === "asc") {
+          return a.price - b.price;
+        } else {
+          return b.price - a.price;
+        }
+      });
+    },
+    limitProduct: (state, action) => {
+      const limit = action.payload;
+      state.limit = limit;
+
+      if (state.category)
+        state.filteredProducts = 
+            state.products.filter((item) => item.category === state.category);
+      else state.filteredProducts = [];
+
+      if (limit === "removeLimit") {
+        state.limit = -1;
+      } else
+        state.filteredProducts = (
+          state.filteredProducts.length > 0
+            ? state.filteredProducts
+            : state.products
+        ).filter((item, index) => index < limit);
+
+        state.products.sort((a, b) => {
+          if (state.order === "asc") {
+            return a.price - b.price;
+          } else {
+            return b.price - a.price;
+          }
+        });
+        state.filteredProducts.sort((a, b) => {
+          if (state.order === "asc") {
+            return a.price - b.price;
+          } else {
+            return b.price - a.price;
+          }
+        });
     },
   },
   extraReducers: (builder) => {
@@ -64,6 +132,7 @@ export const productsReducer = createSlice({
 });
 export const { sortProducts } = productsReducer.actions;
 export const { categorizeProduct } = productsReducer.actions;
+export const { limitProduct } = productsReducer.actions;
 
 // Redux store
 export const store = configureStore({
