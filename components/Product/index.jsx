@@ -10,9 +10,7 @@ const Product = ({ product }) => {
         <div className="text-center white-space font-medium underline">
           {product.title}
         </div>
-        <div className="flex flex-row justify-between w-full">
-          <div>{product.price + " Rs"}</div>
-        </div>
+        <div>{product.price + " Rs"}</div>
       </div>
     </div>
   );

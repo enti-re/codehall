@@ -1,6 +1,5 @@
 export default async function handler(req, res) {
-
-    const BASE_URL = "https://fakestoreapi.com/products/";
+    const BASE_URL = "https://fakestoreapi.com/products/categories";
     if (req.method === "GET") {
       try {
         const response = await fetch(BASE_URL);
