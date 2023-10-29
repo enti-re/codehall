@@ -15,7 +15,7 @@ const LimitDropdown = () => {
           dispatch(limitProduct(event.target.value));
         }}
       >
-        <option value="asc" selected disabled>
+        <option value="" selected disabled>
           Select Limit
         </option>
         <option value={"2"}>2</option>

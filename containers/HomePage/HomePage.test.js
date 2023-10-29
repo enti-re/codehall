@@ -25,18 +25,33 @@ describe("HomePage", () => {
     const Products = await screen.findByRole("ProductsContainer");
     expect(Products).toBeInTheDocument();
   });
-  
-  test("sorting Option",async ()=>{
-    render(
-        <Provider store={store}>
-          <HomePage />
-        </Provider>
-      );
 
-      const sortDropdown = await screen.findByRole("SortDropdown");
-      expect(sortDropdown).toBeInTheDocument();
-      const sortAsc = await screen.findByText("High to Low");
-      await userEvent.click(sortAsc);
-      expect(sortAsc.selected).toBe(true);
-  })
+  test("sorting Option", async () => {
+    render(
+      <Provider store={store}>
+        <HomePage />
+      </Provider>
+    );
+
+    const sortDropdown = await screen.findByRole("SortDropdown");
+    expect(sortDropdown).toBeInTheDocument();
+    const sortAsc = await screen.findByText("Low to High");
+    await userEvent.click(sortAsc);
+    expect(sortAsc.selected).toBe(true);
+  });
+
+  test("select limit", async () => {
+    render(
+      <Provider store={store}>
+        <HomePage />
+      </Provider>
+    );
+
+    const limitDropdown = await screen.findByRole("Limit");
+    expect(limitDropdown).toBeInTheDocument();
+    const two = await screen.findByText("2");
+    expect(two).toBeInTheDocument();
+    await userEvent.click(two);
+    expect(two.selected).toBe(true);
+  });
 });

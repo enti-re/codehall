@@ -15,7 +15,7 @@ const CategoryDropdown = () => {
           dispatch(categorizeProduct(event.target.value));
         }}
       >
-        <option value="asc" selected disabled>
+        <option value="" selected disabled>
           Filter By Category
         </option>
         <option value={"electronics"}>electronics</option>
