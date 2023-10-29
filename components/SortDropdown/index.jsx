@@ -8,7 +8,7 @@ const SortDropdown = () => {
     <>
       <select
         className="bg-black"
-        name="cars"
+        name="sort"
         id="cars"
         onChange={(event) => {
           dispatch(sortProducts(event.target.value));

@@ -15,12 +15,12 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
-
 // Redux reducer
 export const productsReducer = createSlice({
   name: "products",
   initialState: {
     products: [],
+    filteredProducts: [],
     isLoading: true,
     error: null,
     sort: "asc",
@@ -36,6 +36,15 @@ export const productsReducer = createSlice({
           return b.price - a.price;
         }
       });
+    },
+    categorizeProduct: (state, action) => {
+      const category = action.payload;
+      if (category === "all") state.filteredProducts = [];
+      else {
+        state.filteredProducts = state.products.filter(
+          (item) => item.category === category
+        );
+      }
     },
   },
   extraReducers: (builder) => {
@@ -54,6 +63,7 @@ export const productsReducer = createSlice({
   },
 });
 export const { sortProducts } = productsReducer.actions;
+export const { categorizeProduct } = productsReducer.actions;
 
 // Redux store
 export const store = configureStore({

@@ -13,13 +13,14 @@ const HomePage = () => {
     return state.reducer?.isLoading;
   });
 
+  const filteredProducts = useSelector((state)=> state.reducer?.filteredProducts)
   const products = useSelector((state) => state.reducer?.products);
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  const renderProducts = products?.map((product) => {
+  const renderProducts = (filteredProducts.length>0 ? filteredProducts :products)?.map((product) => {
     return (
       <Product
         key={product.id}
@@ -35,7 +36,7 @@ const HomePage = () => {
       <Header appName={"PRODUCTS"}>
         <AppHeader />
       </Header>
-      <div className="sm:grid-cols-1 md:grid-cols-4 grid bg-black gap-8 p-20">
+      <div className="sm:grid-cols-1 md:grid-cols-4 grid  gap-8 p-20">
         {renderProducts}
       </div>
     </div>
